@@ -13,6 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get(
+    '/', function () {
     return view('welcome');
+});
+Route::get('localhost/id{number?}', 'UserController@index');
+Route::get('localhost/form',function (){
+    return view('form');
+});
+Route::post('localhost/form', function (){
+    return "forma priynata";
 });
