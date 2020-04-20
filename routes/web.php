@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get(
-    '/', function () {
-    return view('welcome');
-});
+Route::get('/', 'TableController@index');
+Route::get('/id{id?}', 'TableController@increse');
+Route::get('/logs', 'LogController@logs');
+Route::get('/logs/accept', 'LogController@logupdate')->name('accept');
