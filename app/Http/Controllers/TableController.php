@@ -32,7 +32,8 @@ class TableController extends Controller
         $updatelog=DB::table('logs')->insert(['task_id'=> $id,'status'=>0]);
 
         $table = DB::table('task')->get();
-        return view('table')->with(['tables' => $table]);
+        return back();
+//        return view('table')->with(['tables' => $table]);
     }
 
 }
