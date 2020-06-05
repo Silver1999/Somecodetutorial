@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Log;
+use App\Task;
 use Illuminate\Http\Request;
 use DB;
 
@@ -10,28 +12,27 @@ class TableController extends Controller
 {
     public function index()
     {
-        $table = DB::table('task')->get();
+        $table = Task::all();
         return view('table')->with(['tables' => $table]);
     }
 
     public function increse(Request $request)
     {
         $id = $request->id;
-        if($id==0){
-            $table = DB::table('task')->get();
+        if ($id == 0) {
+            $table = Task::all();
             return view('table')->with(['tables' => $table]);
         }
 
-        $update = DB::table('task')
-            ->where('id', $id)
+        $update = Task::where('id', $id)
             ->update(
                 [
                     'counter' => DB::raw('counter + 1'),
                 ]
             );
-        $updatelog=DB::table('logs')->insert(['task_id'=> $id,'status'=>0]);
+        $updatelog = Log::insert(['tasks_id' => $id, 'status' => 0]);
 
-        $table = DB::table('task')->get();
+        $table = Task::get();
         return back();
 //        return view('table')->with(['tables' => $table]);
     }

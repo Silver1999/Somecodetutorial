@@ -17,3 +17,4 @@ Route::get('/', 'TableController@index');
 Route::get('/id{id?}', 'TableController@increse');
 Route::get('/logs', 'LogController@logs');
 Route::get('/logs/accept', 'LogController@logupdate')->name('accept');
+Route::get('/logs/number/{id}', 'LogController@show')->name('show');

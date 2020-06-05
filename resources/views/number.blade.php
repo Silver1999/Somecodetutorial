@@ -22,7 +22,7 @@
 <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
     <thead>
     <tr>
-        <th>ID</th>
+        <th>{{$numbers}}</th>
         <th>Name</th>
         <th>Counter</th>
     </tr>
@@ -30,11 +30,7 @@
     <tbody>
 
 
-    @foreach($number as $numb)
-        <tr>
-            <th>{{$numb->id}}</th>
-        </tr>
-    @endforeach
+
 
     </tbody>
 </table>
