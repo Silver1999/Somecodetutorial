@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/places','PlaceController@index');
-Route::get('/places/{id}','PlaceController@show');
-Route::get('places/{id}/photos/add','PlaceController@addphoto');
+Route::get('/places/{id}','PlaceController@show')->where('id','[0-9]+');
+Route::post('places/{id}','PlaceController@addphoto')->name('addphoto')->where('id','[0-9]+');
 Route::get('/places/create','PlaceController@create')->name('addplace');
-Route::post('/places/create/data','PlaceController@createpost')->name('postcreate');
+Route::post('/places/create','PlaceController@createpost')->name('postcreate');

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PlaceRequest;
 use App\Place;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class PlaceController extends Controller
 {
@@ -46,66 +48,31 @@ class PlaceController extends Controller
     {
         $id = $request->id;
         $query = Place::find($id);
-        return view('pages.place', compact('query'));
+        $userImagesPath = storage_path("app/public/$id");
+        if (!File::exists($userImagesPath)) {
+            $images = 0;
+            return view('pages.place', compact('query', 'images', 'id'));
+        }
+        $userImagesArray = File::allFiles($userImagesPath);
+        $images = [];
+        foreach ($userImagesArray as $file) {
+            $images[] = $file->getFilename();
+        }
+        return view('pages.place', compact('query', 'images', 'id'));
     }
-    public  function  addphoto(){
 
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function addphoto(Request $request)
     {
-        //
+        $folder_id = $request->route('id');
+        $data = $request->validate(
+            [
+                'photo' => 'image|mimes:jpeg,jpg,png|required',
+            ]
+        );
+        $file = $request->file('photo');
+        $file->store("public/$folder_id");
+        return back();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Place  $places
-     *
-     * @return \Illuminate\Http\Response
-     */
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Place  $places
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Place $places)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Place  $places
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Place $places)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Place  $places
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Place $places)
-    {
-        //
-    }
 }
