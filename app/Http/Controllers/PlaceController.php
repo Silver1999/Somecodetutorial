@@ -48,6 +48,9 @@ class PlaceController extends Controller
     {
         $id = $request->id;
         $query = Place::find($id);
+     if (empty($query)){
+         abort(404);
+     }
         $userImagesPath = storage_path("app/public/$id");
         if (!File::exists($userImagesPath)) {
             $images = 0;

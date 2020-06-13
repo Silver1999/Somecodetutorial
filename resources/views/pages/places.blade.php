@@ -4,7 +4,7 @@
     Type:  {{$data->type}}<br>
 @endforeach
 
-@if(Request::url() === 'http://tutorial5/places/create')
+@if(Request::url() === config('app.url').'/places/create')
     <style>
         #link{
             display: none;
