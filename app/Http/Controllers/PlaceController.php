@@ -53,7 +53,9 @@ class PlaceController extends Controller
             $images = 0;
             return view('pages.place', compact('query', 'images', 'id'));
         }
-        $userImagesArray = File::allFiles($userImagesPath);
+        $userImagesArray = collect(File::allFiles($userImagesPath))->sortByDesc(function ($userImagesArray) {
+                return $userImagesArray->getCTime();
+            });
         $images = [];
         foreach ($userImagesArray as $file) {
             $images[] = $file->getFilename();
