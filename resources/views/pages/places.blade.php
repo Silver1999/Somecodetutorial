@@ -1,10 +1,10 @@
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 @foreach($datas as $data)
-    Name:  <a href="/places/{{$data->id}}">{{$data->name}}</a> <br>
+    Name:  <a href="{{route('placeshow', $data->id)}}">{{$data->name}}</a> <br>
     Type:  {{$data->type}}<br>
 @endforeach
 
-@if(Request::url() === config('app.url').'/places/create')
+@if(Request::is('places/create'))
     <style>
         #link{
             display: none;
