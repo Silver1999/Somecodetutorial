@@ -126,7 +126,6 @@
     background-color: #5aafee;
 }
 .drop:after, .drop:before {
-    content: "";
     position: absolute;
     top: 1.5em;
     right: 1em;
