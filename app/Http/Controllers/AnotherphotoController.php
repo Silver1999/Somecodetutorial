@@ -11,6 +11,9 @@ class AnotherphotoController extends Controller
     public function show()
     {
         $datas = Place::all('name');
+        if ($datas->isEmpty()){
+            return  redirect()->route('home');
+        }
         return view('pages.addphoto', compact('datas'));
     }
 

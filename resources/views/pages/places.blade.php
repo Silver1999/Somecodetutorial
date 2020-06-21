@@ -1,5 +1,5 @@
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+@extends('layout.layout')
+@section('content')
 @foreach($datas as $data)
     Name:  <a href="{{route('placeshow', $data->id)}}">{{$data->name}}</a> <br>
     Type:  {{$data->type}}<br>
@@ -31,3 +31,4 @@
     </form>
 @endif
 <a href="{{route('addplace')}}" id="link">Добавити місто</a>
+@endsection

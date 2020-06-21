@@ -48,21 +48,32 @@ class PlaceController extends Controller
     {
         $id = $request->id;
         $query = Place::find($id);
-     if (empty($query)){
-         abort(404);
-     }
+        $getdata=Place::where('id',$id)->value('created_at');
+        $timecheck=strtotime($getdata);
+        if (empty($query)) {
+            abort(404);
+        }
         $userImagesPath = storage_path("app/public/$id");
         if (!File::exists($userImagesPath)) {
             $images = 0;
             return view('pages.place', compact('query', 'images', 'id'));
         }
-        $userImagesArray = collect(File::allFiles($userImagesPath))->sortByDesc(function ($userImagesArray) {
+        $userImagesArray = collect(File::allFiles($userImagesPath))->sortByDesc(
+            function ($userImagesArray) {
                 return $userImagesArray->getCTime();
-            });
+            }
+        );
         $images = [];
+        $file_id=0;
         foreach ($userImagesArray as $file) {
+
             $images[] = $file->getFilename();
+            if (Storage::lastModified("public/$id/$images[$file_id]")>$timecheck){
+                unlink(storage_path("app/public/$id/$images[$file_id]"));
+            }
+            $file_id++;
         }
+
         return view('pages.place', compact('query', 'images', 'id'));
     }
 
