@@ -48,8 +48,8 @@ class PlaceController extends Controller
     {
         $id = $request->id;
         $query = Place::find($id);
-        $getdata=Place::where('id',$id)->value('created_at');
-        $timecheck=strtotime($getdata);
+        $getdata=Place::where('id',$id)->pluck('created_at')->first();
+        $getdata1=strtotime($getdata);
         if (empty($query)) {
             abort(404);
         }
@@ -68,8 +68,19 @@ class PlaceController extends Controller
         foreach ($userImagesArray as $file) {
 
             $images[] = $file->getFilename();
-            if (Storage::lastModified("public/$id/$images[$file_id]")>$timecheck){
+            $timefile=Storage::lastModified("public/$id/$images[$file_id]");
+            $timefile1=gmdate('M d Y H:i:s', $timefile);
+//            dump($timefile1);
+//            dump($getdata);
+//            if ($timefile>$getdata1){
+//                dump('File bigger then timecheck');
+//
+//
+//            }
+            if ($getdata1>$timefile){
+//                dump('File  less then timecehk');
                 unlink(storage_path("app/public/$id/$images[$file_id]"));
+
             }
             $file_id++;
         }

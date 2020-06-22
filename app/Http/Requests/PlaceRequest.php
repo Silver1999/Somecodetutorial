@@ -24,7 +24,7 @@ class PlaceRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>'required|unique:places|alpha',
+            'name'=>'required|unique:places|alpha_dash',
             'tips'=>'required',
         ];
     }
