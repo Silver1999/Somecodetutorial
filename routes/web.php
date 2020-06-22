@@ -13,19 +13,37 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get(
+    '/',
+    function () {
+        return view('welcome');
+    }
+)->name('home');
 
 
-Route::prefix('places')->group(function (){
-    Route::get('/','PlaceController@index')->name('places');
-    Route::get('/{id}','PlaceController@show')->name('placeshow')->where('id','[0-9]+');
-    Route::post('/{id}','PlaceController@addphoto')->name('addphoto')->where('id','[0-9]+');
-    Route::get('/create','PlaceController@create')->name('addplace');
-    Route::post('/create','PlaceController@createpost')->name('postcreate');
-});
+Route::prefix('places')->group(
+    function () {
+        Route::get('/', 'PlaceController@index')->name('places');
+        Route::get('/{id}', 'PlaceController@show')->name('placeshow')->where(
+            'id',
+            '[0-9]+'
+        );
+        Route::post('/{id}', 'PlaceController@addphoto')->name('addphoto')
+            ->where('id', '[0-9]+');
+        Route::get('/create', 'PlaceController@create')->name('addplace');
+        Route::post('/create', 'PlaceController@createpost')->name(
+            'postcreate'
+        );
+        Route::post('/delete/{id}/{name}', 'PlaceController@delete')->name(
+            'delete.place'
+        );
+    }
+);
 
 
-Route::get('localhost/photos/add','AnotherphotoController@show')->name('another.photo');
-Route::post('localhost/photos/add','AnotherphotoController@add')->name('another.photo.create');
+Route::get('localhost/photos/add', 'AnotherphotoController@show')->name(
+    'another.photo'
+);
+Route::post('localhost/photos/add', 'AnotherphotoController@add')->name(
+    'another.photo.create'
+);

@@ -48,8 +48,8 @@ class PlaceController extends Controller
     {
         $id = $request->id;
         $query = Place::find($id);
-        $getdata=Place::where('id',$id)->pluck('created_at')->first();
-        $getdata1=strtotime($getdata);
+        $getdata = Place::where('id', $id)->pluck('created_at')->first();
+        $getdata1 = strtotime($getdata);
         if (empty($query)) {
             abort(404);
         }
@@ -64,12 +64,11 @@ class PlaceController extends Controller
             }
         );
         $images = [];
-        $file_id=0;
+        $file_id = 0;
         foreach ($userImagesArray as $file) {
-
             $images[] = $file->getFilename();
-            $timefile=Storage::lastModified("public/$id/$images[$file_id]");
-            $timefile1=gmdate('M d Y H:i:s', $timefile);
+            $timefile = Storage::lastModified("public/$id/$images[$file_id]");
+            $timefile1 = gmdate('M d Y H:i:s', $timefile);
 //            dump($timefile1);
 //            dump($getdata);
 //            if ($timefile>$getdata1){
@@ -77,10 +76,9 @@ class PlaceController extends Controller
 //
 //
 //            }
-            if ($getdata1>$timefile){
+            if ($getdata1 > $timefile) {
 //                dump('File  less then timecehk');
                 unlink(storage_path("app/public/$id/$images[$file_id]"));
-
             }
             $file_id++;
         }
@@ -98,6 +96,12 @@ class PlaceController extends Controller
         );
         $file = $request->file('photo');
         $file->store("public/$folder_id");
+        return back();
+    }
+
+    public function delete($id, $name)
+    {
+        Storage::delete("public/$id/$name");
         return back();
     }
 
